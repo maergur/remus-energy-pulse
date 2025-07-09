@@ -17,7 +17,7 @@ const BottomNavigation: React.FC = () => {
 
   return (
     <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-md bg-white border-t border-gray-200 safe-area-bottom" style={{ maxWidth: '428px' }}>
-      <div className="flex justify-around items-center py-2 px-4">
+      <div className="flex justify-around items-center py-3 px-4">
         {navItems.map(({ path, icon: Icon, label }) => {
           const isActive = location.pathname === path;
           return (

@@ -23,9 +23,9 @@ const App = () => {
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <div className="min-h-screen bg-background relative overflow-hidden">
-              {/* iOS-style app container for iPhone Pro Max */}
-              <div className="max-w-md mx-auto bg-white min-h-screen relative" style={{ maxWidth: '428px' }}>
+            <div className="min-h-screen bg-background relative">
+              {/* iPhone Pro Max optimized container */}
+              <div className="w-full max-w-md mx-auto bg-white min-h-screen relative" style={{ maxWidth: '428px' }}>
                 <Routes>
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/analytics" element={<UsageAnalytics />} />
