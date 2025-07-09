@@ -24,7 +24,7 @@ const Dashboard: React.FC = () => {
   const maxUsage = Math.max(...dailyUsageData.map(d => d.usage));
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-white pb-20">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-white pb-24">
       {/* Header */}
       <div className="bg-white shadow-sm">
         <div className="flex items-center justify-between p-4">
@@ -44,7 +44,7 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      <div className="p-4 space-y-6">
+      <div className="p-4 space-y-4">
         {/* Apple Watch Style Gauge */}
         <Card className="bg-white shadow-lg rounded-3xl overflow-hidden ios-bounce">
           <CardContent className="p-6">
