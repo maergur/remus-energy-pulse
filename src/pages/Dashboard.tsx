@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Battery, Leaf, Trophy, ArrowRight } from 'lucide-react';
+import { Battery, Leaf, Trophy, ArrowRight, Target, CreditCard } from 'lucide-react';
 import AppleWatchGauge from '../components/AppleWatchGauge';
 import { useEnergy } from '../contexts/EnergyContext';
 import { Button } from '@/components/ui/button';
