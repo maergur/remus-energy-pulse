@@ -1,27 +1,46 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
+import { useState } from "react";
+import Dashboard from "./pages/Dashboard";
+import UsageAnalytics from "./pages/UsageAnalytics";
+import GoalsChallenges from "./pages/GoalsChallenges";
+import BillPayment from "./pages/BillPayment";
+import Settings from "./pages/Settings";
+import BottomNavigation from "./components/BottomNavigation";
+import { EnergyProvider } from "./contexts/EnergyContext";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <EnergyProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <div className="min-h-screen bg-background relative overflow-hidden">
+              {/* iOS-style app container */}
+              <div className="max-w-sm mx-auto bg-white min-h-screen relative">
+                <Routes>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/analytics" element={<UsageAnalytics />} />
+                  <Route path="/goals" element={<GoalsChallenges />} />
+                  <Route path="/bill" element={<BillPayment />} />
+                  <Route path="/settings" element={<Settings />} />
+                </Routes>
+                <BottomNavigation />
+              </div>
+            </div>
+          </BrowserRouter>
+        </TooltipProvider>
+      </EnergyProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
