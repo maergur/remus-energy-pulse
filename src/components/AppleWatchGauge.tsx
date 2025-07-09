@@ -43,7 +43,7 @@ const AppleWatchGauge: React.FC = () => {
   };
 
   return (
-    <div className="relative w-64 h-64 mx-auto">
+    <div className="relative w-60 h-60 mx-auto">
       {/* Background glow effect */}
       <div className="absolute inset-0 rounded-full pulse-glow opacity-20"></div>
       
@@ -104,26 +104,26 @@ const AppleWatchGauge: React.FC = () => {
         />
       </svg>
 
-      {/* Center content */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <div className="text-3xl font-bold text-gray-900">
+      {/* Center content - repositioned to avoid overlap */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
+        <div className="text-2xl font-bold text-gray-900 leading-tight">
           {energyData.currentUsage}
         </div>
-        <div className="text-sm text-gray-500">kWh used</div>
-        <div className="text-xs text-gray-400 mt-1">
+        <div className="text-xs text-gray-500 leading-tight">kWh used</div>
+        <div className="text-xs text-gray-400 leading-tight text-center px-2">
           of {energyData.dailyGoal} kWh goal
         </div>
       </div>
 
-      {/* Ring labels */}
+      {/* Ring labels - repositioned to prevent overlap */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 text-xs text-gray-600 font-medium">
+        <div className="absolute top-2 left-1/2 transform -translate-x-1/2 text-xs text-gray-600 font-medium">
           Usage
         </div>
-        <div className="absolute top-8 right-8 text-xs text-purple-600 font-medium">
+        <div className="absolute top-6 right-6 text-xs text-purple-600 font-medium">
           Efficiency
         </div>
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-xs font-medium"
+        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-xs font-medium"
              style={{ color: '#A3E4D7' }}>
           Streak
         </div>
