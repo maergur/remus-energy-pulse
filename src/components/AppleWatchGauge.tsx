@@ -16,9 +16,9 @@ const AppleWatchGauge: React.FC = () => {
   }, []);
 
   const getUsageColor = (percentage: number) => {
-    if (percentage <= 50) return '#1A5D1A'; // Green for low usage
-    if (percentage <= 80) return '#6B46C1'; // Purple for moderate
-    return '#EF4444'; // Red for high usage
+    if (percentage <= 50) return 'hsl(var(--remus-primary))'; // Primary green for low usage
+    if (percentage <= 80) return 'hsl(var(--remus-accent))'; // Purple for moderate
+    return 'hsl(0 84% 60%)'; // Red for high usage
   };
 
   const createRingPath = (percentage: number, radius: number) => {
@@ -44,87 +44,111 @@ const AppleWatchGauge: React.FC = () => {
 
   return (
     <div className="relative w-60 h-60 mx-auto">
-      {/* Background glow effect */}
-      <div className="absolute inset-0 rounded-full pulse-glow opacity-20"></div>
+      {/* Enhanced background glow effect */}
+      <div className="absolute inset-2 rounded-full bg-gradient-to-br from-primary/5 to-accent/5 blur-xl"></div>
+      <div className="absolute inset-4 rounded-full bg-gradient-to-br from-primary/10 to-accent/10 pulse-glow"></div>
       
-      <svg width="240" height="240" viewBox="0 0 240 240" className="transform -rotate-45">
-        {/* Background rings */}
+      {/* Main gauge container with subtle gradient background */}
+      <div className="absolute inset-6 rounded-full bg-gradient-to-br from-muted/50 to-background/80 backdrop-blur-sm border border-border/20"></div>
+      
+      <svg width="240" height="240" viewBox="0 0 240 240" className="transform -rotate-45 relative z-10">
+        {/* Enhanced background rings with gradient strokes */}
+        <defs>
+          <linearGradient id="backgroundGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="hsl(var(--muted))" stopOpacity="0.3" />
+            <stop offset="100%" stopColor="hsl(var(--border))" stopOpacity="0.6" />
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge> 
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        
         <circle
           cx="120"
           cy="120"
           r="100"
           fill="none"
-          stroke="#F3F4F6"
-          strokeWidth="8"
+          stroke="url(#backgroundGradient)"
+          strokeWidth="6"
           strokeLinecap="round"
+          opacity="0.4"
         />
         <circle
           cx="120"
           cy="120"
           r="80"
           fill="none"
-          stroke="#F3F4F6"
-          strokeWidth="8"
+          stroke="url(#backgroundGradient)"
+          strokeWidth="6"
           strokeLinecap="round"
+          opacity="0.4"
         />
         <circle
           cx="120"
           cy="120"
           r="60"
           fill="none"
-          stroke="#F3F4F6"
-          strokeWidth="8"
+          stroke="url(#backgroundGradient)"
+          strokeWidth="6"
           strokeLinecap="round"
+          opacity="0.4"
         />
 
-        {/* Animated progress rings */}
+        {/* Enhanced animated progress rings with glow effect */}
         <path
           d={createRingPath(animateRings ? usagePercentage : 0, 100)}
           fill="none"
           stroke={getUsageColor(usagePercentage)}
-          strokeWidth="8"
+          strokeWidth="10"
           strokeLinecap="round"
-          className="transition-all duration-2000 ease-out"
+          filter="url(#glow)"
+          className="transition-all duration-2000 ease-out drop-shadow-sm"
         />
         <path
           d={createRingPath(animateRings ? efficiencyPercentage : 0, 80)}
           fill="none"
-          stroke="#6B46C1"
-          strokeWidth="8"
+          stroke="hsl(var(--remus-accent))"
+          strokeWidth="10"
           strokeLinecap="round"
-          className="transition-all duration-2000 ease-out delay-300"
+          filter="url(#glow)"
+          className="transition-all duration-2000 ease-out delay-300 drop-shadow-sm"
         />
         <path
           d={createRingPath(animateRings ? streakPercentage : 0, 60)}
           fill="none"
-          stroke="#A3E4D7"
-          strokeWidth="8"
+          stroke="hsl(var(--remus-highlight))"
+          strokeWidth="10"
           strokeLinecap="round"
-          className="transition-all duration-2000 ease-out delay-600"
+          filter="url(#glow)"
+          className="transition-all duration-2000 ease-out delay-600 drop-shadow-sm"
         />
       </svg>
 
-      {/* Center content - repositioned to avoid overlap */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
-        <div className="text-2xl font-bold text-gray-900 leading-tight">
+      {/* Enhanced center content with better typography */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center z-20">
+        <div className="text-3xl font-bold text-foreground leading-none mb-1 tracking-tight">
           {energyData.currentUsage}
         </div>
-        <div className="text-xs text-gray-500 leading-tight">kWh used</div>
-        <div className="text-xs text-gray-400 leading-tight text-center px-2">
+        <div className="text-sm text-muted-foreground font-medium leading-none mb-1">kWh used</div>
+        <div className="text-xs text-muted-foreground leading-tight text-center px-2 opacity-75">
           of {energyData.dailyGoal} kWh goal
         </div>
       </div>
 
-      {/* Ring labels - repositioned to prevent overlap */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-2 left-1/2 transform -translate-x-1/2 text-xs text-gray-600 font-medium">
+      {/* Enhanced ring labels with better positioning and colors */}
+      <div className="absolute inset-0 pointer-events-none z-30">
+        <div className="absolute top-3 left-1/2 transform -translate-x-1/2 text-xs font-semibold text-foreground/80 bg-background/80 backdrop-blur-sm px-2 py-1 rounded-full border border-border/20">
           Usage
         </div>
-        <div className="absolute top-6 right-6 text-xs text-purple-600 font-medium">
+        <div className="absolute top-8 right-8 text-xs font-semibold text-accent bg-background/80 backdrop-blur-sm px-2 py-1 rounded-full border border-border/20">
           Efficiency
         </div>
-        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-xs font-medium"
-             style={{ color: '#A3E4D7' }}>
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-xs font-semibold bg-background/80 backdrop-blur-sm px-2 py-1 rounded-full border border-border/20"
+             style={{ color: 'hsl(var(--remus-highlight))' }}>
           Streak
         </div>
       </div>
