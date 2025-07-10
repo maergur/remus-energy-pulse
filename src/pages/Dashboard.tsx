@@ -98,7 +98,7 @@ const Dashboard: React.FC = () => {
               }}
               className="h-32"
             >
-              <LineChart data={dailyUsageData} margin={{ left: 0, right: 0, top: 5, bottom: 5 }}>
+              <LineChart data={dailyUsageData}>
                 <Line 
                   type="monotone" 
                   dataKey="usage" 
@@ -112,7 +112,6 @@ const Dashboard: React.FC = () => {
                   axisLine={false}
                   tickLine={false}
                   tick={{ fontSize: 12, fill: "#6B7280" }}
-                  interval={0}
                 />
                 <YAxis hide />
                 <ChartTooltip 
