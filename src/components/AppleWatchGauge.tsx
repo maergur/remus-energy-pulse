@@ -15,11 +15,10 @@ const AppleWatchGauge: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const getUsageColor = (percentage: number) => {
-    if (percentage <= 50) return 'hsl(var(--remus-primary))'; // Primary green for low usage
-    if (percentage <= 80) return 'hsl(var(--remus-accent))'; // Purple for moderate
-    return 'hsl(0 84% 60%)'; // Red for high usage
-  };
+  // Define distinct colors for each ring
+  const usageColor = 'hsl(142 71% 45%)'; // Green for usage
+  const efficiencyColor = 'hsl(262 83% 58%)'; // Purple for efficiency  
+  const streakColor = 'hsl(45 93% 58%)'; // Orange/yellow for streak
 
   const createRingPath = (percentage: number, radius: number) => {
     const angle = (percentage / 100) * 270; // 270 degrees max
@@ -44,12 +43,11 @@ const AppleWatchGauge: React.FC = () => {
 
   return (
     <div className="relative w-60 h-60 mx-auto">
-      {/* Enhanced background glow effect */}
-      <div className="absolute inset-2 rounded-full bg-gradient-to-br from-primary/5 to-accent/5 blur-xl"></div>
-      <div className="absolute inset-4 rounded-full bg-gradient-to-br from-primary/10 to-accent/10 pulse-glow"></div>
+      {/* Reduced background glow effect */}
+      <div className="absolute inset-8 rounded-full bg-gradient-to-br from-primary/3 to-accent/3 blur-lg opacity-60"></div>
       
       {/* Main gauge container with subtle gradient background */}
-      <div className="absolute inset-6 rounded-full bg-gradient-to-br from-muted/50 to-background/80 backdrop-blur-sm border border-border/20"></div>
+      <div className="absolute inset-6 rounded-full bg-gradient-to-br from-muted/30 to-background/60 backdrop-blur-sm border border-border/10"></div>
       
       <svg width="240" height="240" viewBox="0 0 240 240" className="transform -rotate-45 relative z-10">
         {/* Enhanced background rings with gradient strokes */}
@@ -59,7 +57,7 @@ const AppleWatchGauge: React.FC = () => {
             <stop offset="100%" stopColor="hsl(var(--border))" stopOpacity="0.6" />
           </linearGradient>
           <filter id="glow">
-            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
             <feMerge> 
               <feMergeNode in="coloredBlur"/>
               <feMergeNode in="SourceGraphic"/>
@@ -98,33 +96,33 @@ const AppleWatchGauge: React.FC = () => {
           opacity="0.4"
         />
 
-        {/* Enhanced animated progress rings with glow effect */}
+        {/* Enhanced animated progress rings with reduced glow */}
         <path
           d={createRingPath(animateRings ? usagePercentage : 0, 100)}
           fill="none"
-          stroke={getUsageColor(usagePercentage)}
+          stroke={usageColor}
           strokeWidth="10"
           strokeLinecap="round"
           filter="url(#glow)"
-          className="transition-all duration-2000 ease-out drop-shadow-sm"
+          className="transition-all duration-2000 ease-out"
         />
         <path
           d={createRingPath(animateRings ? efficiencyPercentage : 0, 80)}
           fill="none"
-          stroke="hsl(var(--remus-accent))"
+          stroke={efficiencyColor}
           strokeWidth="10"
           strokeLinecap="round"
           filter="url(#glow)"
-          className="transition-all duration-2000 ease-out delay-300 drop-shadow-sm"
+          className="transition-all duration-2000 ease-out delay-300"
         />
         <path
           d={createRingPath(animateRings ? streakPercentage : 0, 60)}
           fill="none"
-          stroke="hsl(var(--remus-highlight))"
+          stroke={streakColor}
           strokeWidth="10"
           strokeLinecap="round"
           filter="url(#glow)"
-          className="transition-all duration-2000 ease-out delay-600 drop-shadow-sm"
+          className="transition-all duration-2000 ease-out delay-600"
         />
       </svg>
 
@@ -139,16 +137,18 @@ const AppleWatchGauge: React.FC = () => {
         </div>
       </div>
 
-      {/* Enhanced ring labels with better positioning and colors */}
+      {/* Enhanced ring labels with distinct colors */}
       <div className="absolute inset-0 pointer-events-none z-30">
-        <div className="absolute top-3 left-1/2 transform -translate-x-1/2 text-xs font-semibold text-foreground/80 bg-background/80 backdrop-blur-sm px-2 py-1 rounded-full border border-border/20">
+        <div className="absolute top-3 left-1/2 transform -translate-x-1/2 text-xs font-semibold bg-background/80 backdrop-blur-sm px-2 py-1 rounded-full border border-border/20"
+             style={{ color: usageColor }}>
           Usage
         </div>
-        <div className="absolute top-8 right-8 text-xs font-semibold text-accent bg-background/80 backdrop-blur-sm px-2 py-1 rounded-full border border-border/20">
+        <div className="absolute top-8 right-8 text-xs font-semibold bg-background/80 backdrop-blur-sm px-2 py-1 rounded-full border border-border/20"
+             style={{ color: efficiencyColor }}>
           Efficiency
         </div>
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-xs font-semibold bg-background/80 backdrop-blur-sm px-2 py-1 rounded-full border border-border/20"
-             style={{ color: 'hsl(var(--remus-highlight))' }}>
+             style={{ color: streakColor }}>
           Streak
         </div>
       </div>
