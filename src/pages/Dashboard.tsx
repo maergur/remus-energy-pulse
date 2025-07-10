@@ -26,7 +26,7 @@ const Dashboard: React.FC = () => {
   const maxUsage = Math.max(...dailyUsageData.map(d => d.usage));
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-white pb-safe">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-white pb-16">
       {/* Header */}
       <div className="bg-white shadow-sm">
         <div className="flex items-center justify-between p-4">
