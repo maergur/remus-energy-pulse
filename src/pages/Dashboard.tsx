@@ -6,6 +6,8 @@ import AppleWatchGauge from '../components/AppleWatchGauge';
 import { useEnergy } from '../contexts/EnergyContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { LineChart, Line, XAxis, YAxis } from 'recharts';
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -87,21 +89,36 @@ const Dashboard: React.FC = () => {
               </Button>
             </div>
             
-            <div className="flex items-end justify-between h-32 space-x-2">
-              {dailyUsageData.map((item, index) => (
-                <div key={item.day} className="flex-1 flex flex-col items-center">
-                  <div 
-                    className="w-full bg-gradient-to-t from-green-500 to-green-400 rounded-t-lg transition-all duration-1000 ease-out"
-                    style={{ 
-                      height: `${(item.usage / maxUsage) * 100}%`,
-                      animationDelay: `${index * 100}ms`
-                    }}
-                  ></div>
-                  <div className="text-xs text-gray-500 mt-2 font-medium">{item.day}</div>
-                  <div className="text-xs text-gray-400">{item.usage}</div>
-                </div>
-              ))}
-            </div>
+            <ChartContainer
+              config={{
+                usage: {
+                  label: "Usage",
+                  color: "hsl(142, 71%, 45%)",
+                },
+              }}
+              className="h-32"
+            >
+              <LineChart data={dailyUsageData}>
+                <Line 
+                  type="monotone" 
+                  dataKey="usage" 
+                  stroke="var(--color-usage)" 
+                  strokeWidth={3}
+                  dot={{ fill: "var(--color-usage)", strokeWidth: 2, r: 4 }}
+                  activeDot={{ r: 6, fill: "var(--color-usage)" }}
+                />
+                <XAxis 
+                  dataKey="day" 
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fontSize: 12, fill: "#6B7280" }}
+                />
+                <YAxis hide />
+                <ChartTooltip 
+                  content={<ChartTooltipContent />}
+                />
+              </LineChart>
+            </ChartContainer>
           </CardContent>
         </Card>
 
