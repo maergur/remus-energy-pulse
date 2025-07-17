@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Home, BarChart3, Target, CreditCard, Settings } from 'lucide-react';
+import { Home, BarChart3, Target, CreditCard, Settings, User } from 'lucide-react';
 
 const BottomNavigation: React.FC = () => {
   const location = useLocation();

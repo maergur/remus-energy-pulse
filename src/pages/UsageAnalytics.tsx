@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useEnergy } from '../contexts/EnergyContext';
+import Header from '../components/Header';
 
 const UsageAnalytics: React.FC = () => {
   const navigate = useNavigate();
@@ -22,23 +23,7 @@ const UsageAnalytics: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white pb-20">
-      {/* Header */}
-      <div className="bg-white shadow-sm">
-        <div className="flex items-center p-4">
-          <Button 
-            variant="ghost" 
-            size="sm"
-            onClick={() => navigate('/')}
-            className="mr-3 p-2"
-          >
-            <ArrowLeft className="w-5 h-5" />
-          </Button>
-          <div>
-            <h1 className="text-xl font-bold text-gray-900">Usage Analytics</h1>
-            <p className="text-sm text-gray-500">Track your energy patterns</p>
-          </div>
-        </div>
-      </div>
+      <Header title="Usage Analytics" subtitle="Track your energy patterns" />
 
       <div className="p-4 space-y-6">
         {/* Efficiency Score Meter */}

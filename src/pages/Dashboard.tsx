@@ -7,7 +7,8 @@ import { useEnergy } from '../contexts/EnergyContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { LineChart, Line, XAxis, YAxis } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from 'recharts';
+import Header from '../components/Header';
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -27,24 +28,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-white pb-16">
-      {/* Header */}
-      <div className="bg-white shadow-sm">
-        <div className="flex items-center justify-between p-4">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center">
-              <Leaf className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-gray-900">Remus</h1>
-              <p className="text-sm text-gray-500">Energy Monitor</p>
-            </div>
-          </div>
-          <div className="text-right">
-            <p className="text-sm text-gray-500">Good morning</p>
-            <p className="font-semibold text-gray-900">Energy Saver</p>
-          </div>
-        </div>
-      </div>
+      <Header title="Dashboard" subtitle="Overview of your energy usage" />
 
       <div className="p-4 space-y-4">
         {/* Apple Watch Style Gauge */}
@@ -96,28 +80,44 @@ const Dashboard: React.FC = () => {
                   color: "hsl(142, 71%, 45%)",
                 },
               }}
-              className="h-32"
+              className="h-40 w-full"
             >
-              <LineChart data={dailyUsageData}>
-                <Line 
-                  type="monotone" 
-                  dataKey="usage" 
-                  stroke="var(--color-usage)" 
-                  strokeWidth={3}
-                  dot={{ fill: "var(--color-usage)", strokeWidth: 2, r: 4 }}
-                  activeDot={{ r: 6, fill: "var(--color-usage)" }}
-                />
-                <XAxis 
-                  dataKey="day" 
-                  axisLine={false}
-                  tickLine={false}
-                  tick={{ fontSize: 12, fill: "#6B7280" }}
-                />
-                <YAxis hide />
-                <ChartTooltip 
-                  content={<ChartTooltipContent />}
-                />
-              </LineChart>
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={dailyUsageData} margin={{ left: -8, right: -8, top: 0, bottom: 36 }}>
+                  <Line 
+                    type="monotone" 
+                    dataKey="usage" 
+                    stroke="var(--color-usage)" 
+                    strokeWidth={3}
+                    dot={{ fill: "var(--color-usage)", strokeWidth: 2, r: 4 }}
+                    activeDot={{ r: 6, fill: "var(--color-usage)" }}
+                  />
+                  <XAxis 
+                    dataKey="day" 
+                    axisLine={false}
+                    tickLine={false}
+                    interval={0}
+                    padding={{ left: 36, right: 20 }}
+                    tick={props => (
+                      <text
+                        x={props.x}
+                        y={props.y}
+                        dy={24}
+                        textAnchor="end"
+                        fontSize={12}
+                        fill="#6B7280"
+                        transform={`rotate(-30,${props.x},${props.y + 24})`}
+                      >
+                        {props.payload.value}
+                      </text>
+                    )}
+                  />
+                  <YAxis hide />
+                  <ChartTooltip 
+                    content={<ChartTooltipContent />}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
             </ChartContainer>
           </CardContent>
         </Card>

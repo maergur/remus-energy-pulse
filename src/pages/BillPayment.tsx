@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useEnergy } from '../contexts/EnergyContext';
 import { toast } from '@/hooks/use-toast';
+import Header from '../components/Header';
 
 const BillPayment: React.FC = () => {
   const navigate = useNavigate();
@@ -38,23 +39,7 @@ const BillPayment: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white pb-20">
-      {/* Header */}
-      <div className="bg-white shadow-sm">
-        <div className="flex items-center p-4">
-          <Button 
-            variant="ghost" 
-            size="sm"
-            onClick={() => navigate('/')}
-            className="mr-3 p-2"
-          >
-            <ArrowLeft className="w-5 h-5" />
-          </Button>
-          <div>
-            <h1 className="text-xl font-bold text-gray-900">Bills & Payment</h1>
-            <p className="text-sm text-gray-500">Manage your electricity bills</p>
-          </div>
-        </div>
-      </div>
+      <Header title="Bills & Payment" subtitle="Manage your electricity bills" />
 
       <div className="p-4 space-y-6">
         {/* Current Bill */}
