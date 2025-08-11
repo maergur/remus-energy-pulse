@@ -1,73 +1,46 @@
-# Welcome to your Lovable project
+# Remus Energy Pulse
 
-## Project info
+A smart energy monitor frontend built with React, Vite, TypeScript, Tailwind, and shadcn/ui.
 
-**URL**: https://lovable.dev/projects/8358cf35-5f0e-4fbe-ba2a-ff3c06ef9c3b
+## Getting Started
 
-## How can I edit this code?
+- Install dependencies:
 
-There are several ways of editing your application.
+```bash
+npm install
+```
 
-**Use Lovable**
+- Run the app locally:
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/8358cf35-5f0e-4fbe-ba2a-ff3c06ef9c3b) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+- Build for production:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm run build
+```
 
-**Use GitHub Codespaces**
+## Tech Stack
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- React + Vite + TypeScript
+- TailwindCSS
+- shadcn/ui
+- lucide-react
+- recharts
 
-## What technologies are used for this project?
+## Project Structure
 
-This project is built with:
+- `src/pages` — feature pages
+- `src/components` — shared components
+- `src/contexts` — global state providers
+- `src/assets` — static assets
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## i18n
 
-## How can I deploy this project?
+- Implemented with i18next + react-i18next, with Turkish (tr) and English (en)
 
-Simply open [Lovable](https://lovable.dev/projects/8358cf35-5f0e-4fbe-ba2a-ff3c06ef9c3b) and click on Share -> Publish.
+## License
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Copyright © Remus Enerji. All rights reserved.
