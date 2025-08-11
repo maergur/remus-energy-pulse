@@ -7,9 +7,11 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import { Input } from '@/components/ui/input';
 import Header from '../components/Header';
+import { useTranslation } from 'react-i18next';
 
 const Settings: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [notifications, setNotifications] = useState({
     dailyUsage: true,
     billReminders: true,
@@ -20,64 +22,64 @@ const Settings: React.FC = () => {
 
   const settingsGroups = [
     {
-      title: 'Notifications',
+      title: t('settings.notifications'),
       icon: Bell,
       items: [
         { 
           key: 'dailyUsage', 
-          label: 'Daily Usage Updates', 
-          description: 'Get notified about daily consumption',
+          label: t('settings.dailyUsageUpdates'), 
+          description: t('settings.dailyUsageDesc'),
           type: 'toggle'
         },
         { 
           key: 'billReminders', 
-          label: 'Bill Reminders', 
-          description: 'Remind me when bills are due',
+          label: t('settings.billReminders'), 
+          description: t('settings.billRemindersDesc'),
           type: 'toggle'
         },
         { 
           key: 'goalAchievements', 
-          label: 'Goal Achievements', 
-          description: 'Celebrate when you reach your goals',
+          label: t('settings.goalAchievements'), 
+          description: t('settings.goalAchievementsDesc'),
           type: 'toggle'
         },
         { 
           key: 'challenges', 
-          label: 'Challenge Updates', 
-          description: 'Updates on challenge progress',
+          label: t('settings.challenges'), 
+          description: t('settings.challengesDesc'),
           type: 'toggle'
         }
       ]
     },
     {
-      title: 'Account',
+      title: t('settings.account'),
       icon: User,
       items: [
-        { label: 'Profile Settings', type: 'button', action: () => {} },
-        { label: 'Energy Meter Connection', type: 'button', action: () => {} },
-        { label: 'Data Export', type: 'button', action: () => {} }
+        { label: t('settings.profileSettings'), type: 'button', action: () => {} },
+        { label: t('settings.energyMeterConnection'), type: 'button', action: () => {} },
+        { label: t('settings.dataExport'), type: 'button', action: () => {} }
       ]
     },
     {
-      title: 'API Integration',
+      title: t('settings.apiIntegration'),
       icon: Key,
       items: [
         { 
-          label: 'API Key', 
-          description: 'Connect your smart meter',
+          label: t('settings.apiKey'), 
+          description: t('settings.apiKeyDesc'),
           type: 'input',
           key: 'apiKey'
         }
       ]
     },
     {
-      title: 'Support',
+      title: t('settings.support'),
       icon: HelpCircle,
       items: [
-        { label: 'Help Center', type: 'button', action: () => {} },
-        { label: 'Contact Support', type: 'button', action: () => {} },
-        { label: 'Privacy Policy', type: 'button', action: () => {} },
-        { label: 'Terms of Service', type: 'button', action: () => {} }
+        { label: t('settings.helpCenter'), type: 'button', action: () => {} },
+        { label: t('settings.contactSupport'), type: 'button', action: () => {} },
+        { label: t('settings.privacyPolicy'), type: 'button', action: () => {} },
+        { label: t('settings.terms'), type: 'button', action: () => {} }
       ]
     }
   ];
@@ -91,7 +93,7 @@ const Settings: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white pb-20">
-      <Header title="Settings" subtitle="Manage your preferences" />
+      <Header title={t('settings.title')} subtitle={t('settings.subtitle')} />
 
       <div className="p-4 space-y-6">
         {/* Profile Card */}
@@ -102,9 +104,9 @@ const Settings: React.FC = () => {
                 <User className="w-8 h-8 text-white" />
               </div>
               <div>
-                <h2 className="text-xl font-bold">Energy Saver</h2>
-                <p className="text-green-100">Premium Member</p>
-                <p className="text-green-200 text-sm">Member since Dec 2023</p>
+                <h2 className="text-xl font-bold">{t('settings.energySaver')}</h2>
+                <p className="text-green-100">{t('settings.premiumMember')}</p>
+                <p className="text-green-200 text-sm">{t('settings.memberSince')}</p>
               </div>
             </div>
           </CardContent>
@@ -112,7 +114,7 @@ const Settings: React.FC = () => {
 
         {/* Settings Groups */}
         {settingsGroups.map((group) => (
-          <div key={group.title}>
+          <div key={group.title as string}>
             <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center">
               <group.icon className="w-5 h-5 mr-2 text-green-600" />
               {group.title}
@@ -148,7 +150,7 @@ const Settings: React.FC = () => {
                         )}
                         <Input
                           type="password"
-                          placeholder="Enter your API key"
+                          placeholder={t('settings.enterApiKey') || ''}
                           value={apiKey}
                           onChange={(e) => setApiKey(e.target.value)}
                           className="bg-gray-50"
@@ -177,7 +179,7 @@ const Settings: React.FC = () => {
           <CardContent className="p-4">
             <button className="w-full flex items-center justify-center space-x-2 text-red-600 hover:bg-red-50 py-3 rounded-2xl transition-colors">
               <LogOut className="w-5 h-5" />
-              <span className="font-semibold">Sign Out</span>
+              <span className="font-semibold">{t('settings.signOut')}</span>
             </button>
           </CardContent>
         </Card>

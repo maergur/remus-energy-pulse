@@ -1,22 +1,24 @@
 
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Home, BarChart3, Target, CreditCard, Settings, User } from 'lucide-react';
+import { Home, BarChart3, Target, CreditCard, Settings } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const BottomNavigation: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const navItems = [
-    { path: '/', icon: Home, label: 'Home' },
-    { path: '/analytics', icon: BarChart3, label: 'Analytics' },
-    { path: '/goals', icon: Target, label: 'Goals' },
-    { path: '/bill', icon: CreditCard, label: 'Bill' },
-    { path: '/settings', icon: Settings, label: 'Settings' },
+    { path: '/', icon: Home, label: t('nav.home') },
+    { path: '/analytics', icon: BarChart3, label: t('nav.analytics') },
+    { path: '/goals', icon: Target, label: t('nav.goals') },
+    { path: '/bill', icon: CreditCard, label: t('nav.bill') },
+    { path: '/settings', icon: Settings, label: t('nav.settings') },
   ];
 
   return (
-    <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-md bg-white border-t border-gray-200 safe-area-bottom" style={{ maxWidth: '428px' }}>
+    <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full bg-white border-t border-gray-200 safe-area-bottom" style={{ maxWidth: '430px' }}>
       <div className="flex justify-around items-center py-3 px-4">
         {navItems.map(({ path, icon: Icon, label }) => {
           const isActive = location.pathname === path;

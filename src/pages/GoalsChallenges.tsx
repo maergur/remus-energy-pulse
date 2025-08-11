@@ -8,18 +8,20 @@ import { Input } from '@/components/ui/input';
 import { useEnergy } from '../contexts/EnergyContext';
 import { toast } from '@/hooks/use-toast';
 import Header from '../components/Header';
+import { useTranslation } from 'react-i18next';
 
 const GoalsChallenges: React.FC = () => {
   const navigate = useNavigate();
   const { energyData, updateGoal, addBadge } = useEnergy();
   const [newGoal, setNewGoal] = useState(energyData.dailyGoal.toString());
   const [showGoalInput, setShowGoalInput] = useState(false);
+  const { t } = useTranslation();
 
   const challenges = [
     {
       id: 1,
-      title: '5-Day Low Usage Streak',
-      description: 'Use less than 8 kWh for 5 consecutive days',
+      title: t('goals.challenge1Title'),
+      description: t('goals.challenge1Desc'),
       progress: 60,
       reward: 'Eco Warrior Badge',
       daysLeft: 2,
@@ -28,8 +30,8 @@ const GoalsChallenges: React.FC = () => {
     },
     {
       id: 2,
-      title: 'Weekend Energy Saver',
-      description: 'Reduce weekend usage by 15%',
+      title: t('goals.challenge2Title'),
+      description: t('goals.challenge2Desc'),
       progress: 80,
       reward: 'Weekend Hero Badge',
       daysLeft: 1,
@@ -38,8 +40,8 @@ const GoalsChallenges: React.FC = () => {
     },
     {
       id: 3,
-      title: 'Monthly Efficiency Master',
-      description: 'Maintain 90+ efficiency score for 30 days',
+      title: t('goals.challenge3Title'),
+      description: t('goals.challenge3Desc'),
       progress: 45,
       reward: 'Efficiency Master Badge',
       daysLeft: 16,
@@ -54,22 +56,22 @@ const GoalsChallenges: React.FC = () => {
       updateGoal(goal);
       setShowGoalInput(false);
       toast({
-        title: "Goal Updated!",
-        description: `Your new daily goal is ${goal} kWh`,
+        title: t('goals.goalUpdatedTitle'),
+        description: t('goals.goalUpdatedDesc', { goal }),
       });
     }
   };
 
   const joinChallenge = (challenge: any) => {
     toast({
-      title: "Challenge Joined!",
-      description: `You've joined the ${challenge.title} challenge`,
+      title: t('goals.challengeJoinedTitle'),
+      description: t('goals.challengeJoinedDesc', { title: challenge.title }),
     });
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-white pb-20">
-      <Header title="Goals & Challenges" subtitle="Set targets and join challenges" />
+      <Header title={t('goals.title')} subtitle={t('goals.subtitle')} />
 
       <div className="p-4 space-y-6">
         {/* Current Goal */}
@@ -78,7 +80,7 @@ const GoalsChallenges: React.FC = () => {
             <CardTitle className="flex items-center justify-between">
               <div className="flex items-center">
                 <Target className="w-6 h-6 text-green-600 mr-2" />
-                Daily Energy Goal
+                {t('goals.dailyEnergyGoal')}
               </div>
               <Button 
                 variant="outline"
@@ -87,7 +89,7 @@ const GoalsChallenges: React.FC = () => {
                 className="text-green-600 border-green-600"
               >
                 <Plus className="w-4 h-4 mr-1" />
-                Edit
+                {t('goals.edit')}
               </Button>
             </CardTitle>
           </CardHeader>
@@ -96,26 +98,26 @@ const GoalsChallenges: React.FC = () => {
               <div className="space-y-4">
                 <div>
                   <label className="text-sm font-medium text-gray-700 mb-2 block">
-                    New Daily Goal (kWh)
+                    {t('goals.newDailyGoal')}
                   </label>
                   <Input
                     type="number"
                     value={newGoal}
                     onChange={(e) => setNewGoal(e.target.value)}
                     className="text-lg"
-                    placeholder="Enter your daily goal"
+                    placeholder={t('goals.enterDailyGoal') || ''}
                   />
                 </div>
                 <div className="flex space-x-3">
                   <Button onClick={handleSaveGoal} className="flex-1 bg-green-600 hover:bg-green-700">
-                    Save Goal
+                    {t('goals.saveGoal')}
                   </Button>
                   <Button 
                     variant="outline" 
                     onClick={() => setShowGoalInput(false)}
                     className="flex-1"
                   >
-                    Cancel
+                    {t('goals.cancel')}
                   </Button>
                 </div>
               </div>
@@ -124,7 +126,7 @@ const GoalsChallenges: React.FC = () => {
                 <div className="text-4xl font-bold text-green-600 mb-2">
                   {energyData.dailyGoal} kWh
                 </div>
-                <div className="text-gray-600">Your current daily target</div>
+                <div className="text-gray-600">{t('goals.currentDailyTarget')}</div>
                 <div className="mt-4">
                   <div className="w-full h-4 bg-gray-200 rounded-full overflow-hidden">
                     <div 
@@ -133,8 +135,8 @@ const GoalsChallenges: React.FC = () => {
                     ></div>
                   </div>
                   <div className="flex justify-between text-sm text-gray-500 mt-2">
-                    <span>{energyData.currentUsage} kWh used</span>
-                    <span>{(energyData.dailyGoal - energyData.currentUsage).toFixed(1)} kWh remaining</span>
+                    <span>{t('goals.used', { value: energyData.currentUsage })}</span>
+                    <span>{t('goals.remaining', { value: (energyData.dailyGoal - energyData.currentUsage).toFixed(1) })}</span>
                   </div>
                 </div>
               </div>
@@ -144,7 +146,7 @@ const GoalsChallenges: React.FC = () => {
 
         {/* Active Challenges */}
         <div>
-          <h2 className="text-lg font-bold text-gray-900 mb-4">Active Challenges</h2>
+          <h2 className="text-lg font-bold text-gray-900 mb-4">{t('goals.activeChallenges')}</h2>
           <div className="space-y-4">
             {challenges.map((challenge) => (
               <Card key={challenge.id} className="bg-white shadow-lg rounded-3xl overflow-hidden">
@@ -159,7 +161,7 @@ const GoalsChallenges: React.FC = () => {
                       
                       <div className="mb-3">
                         <div className="flex justify-between items-center mb-1">
-                          <span className="text-xs font-medium text-gray-500">Progress</span>
+                          <span className="text-xs font-medium text-gray-500">{t('goals.progress')}</span>
                           <span className="text-xs font-bold text-gray-700">{challenge.progress}%</span>
                         </div>
                         <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
@@ -176,7 +178,7 @@ const GoalsChallenges: React.FC = () => {
                           {challenge.reward}
                         </div>
                         <div className="text-xs font-medium text-gray-700">
-                          {challenge.daysLeft} days left
+                          {t('goals.daysLeft', { days: challenge.daysLeft })}
                         </div>
                       </div>
                     </div>
@@ -192,7 +194,7 @@ const GoalsChallenges: React.FC = () => {
           <CardContent className="p-6">
             <h3 className="text-lg font-bold mb-4 flex items-center">
               <Trophy className="w-6 h-6 mr-2" />
-              Your Badges
+              {t('goals.yourBadges')}
             </h3>
             <div className="flex flex-wrap gap-3">
               {energyData.badges.map((badge, index) => (

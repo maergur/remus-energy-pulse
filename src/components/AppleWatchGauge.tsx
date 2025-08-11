@@ -1,10 +1,12 @@
 
 import React, { useEffect, useState } from 'react';
 import { useEnergy } from '../contexts/EnergyContext';
+import { useTranslation } from 'react-i18next';
 
 const AppleWatchGauge: React.FC = () => {
   const { energyData } = useEnergy();
   const [animateRings, setAnimateRings] = useState(false);
+  const { t } = useTranslation();
 
   const usagePercentage = (energyData.currentUsage / energyData.dailyGoal) * 100;
   const efficiencyPercentage = energyData.efficiencyScore;
@@ -133,23 +135,23 @@ const AppleWatchGauge: React.FC = () => {
         <div className="text-3xl font-bold text-foreground leading-none mb-1 tracking-tight">
           {energyData.currentUsage}
         </div>
-        <div className="text-sm text-muted-foreground font-medium leading-none mb-1">kWh used</div>
+        <div className="text-sm text-muted-foreground font-medium leading-none mb-1">{t('gauge.kwhUsed')}</div>
         <div className="text-xs text-muted-foreground leading-tight text-center px-2 opacity-75">
-          of {energyData.dailyGoal} kWh goal
+          {t('gauge.ofGoal', { goal: energyData.dailyGoal })}
         </div>
       </div>
 
       {/* Enhanced ring labels with better positioning and colors */}
       <div className="absolute inset-0 pointer-events-none z-30">
         <div className="absolute top-3 left-1/2 transform -translate-x-1/2 text-xs font-semibold text-foreground/80 bg-background/80 backdrop-blur-sm px-2 py-1 rounded-full border border-border/20">
-          Usage
+          {t('dashboard.usage')}
         </div>
         <div className="absolute top-8 right-8 text-xs font-semibold text-accent bg-background/80 backdrop-blur-sm px-2 py-1 rounded-full border border-border/20">
-          Efficiency
+          {t('gauge.efficiency')}
         </div>
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-xs font-semibold bg-background/80 backdrop-blur-sm px-2 py-1 rounded-full border border-border/20"
              style={{ color: 'hsl(var(--remus-highlight))' }}>
-          Streak
+          {t('gauge.streak')}
         </div>
       </div>
     </div>

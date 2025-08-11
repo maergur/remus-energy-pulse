@@ -9,10 +9,12 @@ import { Card, CardContent } from '@/components/ui/card';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import Header from '../components/Header';
+import { useTranslation } from 'react-i18next';
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
   const { energyData } = useEnergy();
+  const { t } = useTranslation();
 
   const dailyUsageData = [
     { day: 'Mon', usage: 8.2 },
@@ -28,15 +30,15 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-white pb-16">
-      <Header title="Dashboard" subtitle="Overview of your energy usage" />
+      <Header title={t('dashboard.title')} subtitle={t('dashboard.subtitle')} />
 
       <div className="p-4 space-y-4">
         {/* Apple Watch Style Gauge */}
         <Card className="bg-white shadow-lg rounded-3xl overflow-hidden ios-bounce">
           <CardContent className="p-6">
             <div className="text-center mb-4">
-              <h2 className="text-lg font-bold text-gray-900">Today's Usage</h2>
-              <p className="text-sm text-gray-500">Real-time monitoring</p>
+              <h2 className="text-lg font-bold text-gray-900">{t('dashboard.todaysUsage')}</h2>
+              <p className="text-sm text-gray-500">{t('dashboard.realtime')}</p>
             </div>
             <AppleWatchGauge />
             
@@ -44,15 +46,15 @@ const Dashboard: React.FC = () => {
             <div className="flex justify-around mt-6 pt-4 border-t border-gray-100">
               <div className="text-center">
                 <div className="text-2xl font-bold text-green-600">{energyData.costToday}</div>
-                <div className="text-xs text-gray-500">TL Today</div>
+                <div className="text-xs text-gray-500">{t('dashboard.tlToday')}</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-purple-600">{energyData.efficiencyScore}</div>
-                <div className="text-xs text-gray-500">Efficiency</div>
+                <div className="text-xs text-gray-500">{t('dashboard.efficiency')}</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-blue-600">{energyData.streak}</div>
-                <div className="text-xs text-gray-500">Day Streak</div>
+                <div className="text-xs text-gray-500">{t('dashboard.dayStreak')}</div>
               </div>
             </div>
           </CardContent>
@@ -62,22 +64,22 @@ const Dashboard: React.FC = () => {
         <Card className="bg-white shadow-lg rounded-3xl overflow-hidden">
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-gray-900">Weekly Overview</h3>
+              <h3 className="text-lg font-bold text-gray-900">{t('dashboard.weeklyOverview')}</h3>
               <Button 
                 variant="ghost" 
                 size="sm"
                 onClick={() => navigate('/analytics')}
                 className="text-green-600 hover:text-green-700"
               >
-                View All <ArrowRight className="w-4 h-4 ml-1" />
+                {t('dashboard.viewAll')} <ArrowRight className="w-4 h-4 ml-1" />
               </Button>
             </div>
             
             <ChartContainer
               config={{
                 usage: {
-                  label: "Usage",
-                  color: "hsl(142, 71%, 45%)",
+                  label: t('dashboard.usage'),
+                  color: 'hsl(142, 71%, 45%)',
                 },
               }}
               className="h-40 w-full"
@@ -89,8 +91,8 @@ const Dashboard: React.FC = () => {
                     dataKey="usage" 
                     stroke="var(--color-usage)" 
                     strokeWidth={3}
-                    dot={{ fill: "var(--color-usage)", strokeWidth: 2, r: 4 }}
-                    activeDot={{ r: 6, fill: "var(--color-usage)" }}
+                    dot={{ fill: 'var(--color-usage)', strokeWidth: 2, r: 4 }}
+                    activeDot={{ r: 6, fill: 'var(--color-usage)' }}
                   />
                   <XAxis 
                     dataKey="day" 
@@ -127,11 +129,11 @@ const Dashboard: React.FC = () => {
           <CardContent className="p-6">
             <div className="flex items-center space-x-4">
               <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                <Trophy className="w-6 h-6 text-white" />
+                <Trophy className="w-6 h-6 text.white" />
               </div>
               <div className="flex-1">
-                <h3 className="font-bold text-lg">Eco Star Achievement</h3>
-                <p className="text-purple-100 text-sm">3-day energy saving streak!</p>
+                <h3 className="font-bold text-lg">{t('dashboard.ecoStar')}</h3>
+                <p className="text-purple-100 text-sm">{t('dashboard.ecoStarText')}</p>
               </div>
             </div>
           </CardContent>
@@ -144,7 +146,7 @@ const Dashboard: React.FC = () => {
             className="bg-green-600 hover:bg-green-700 text-white rounded-2xl h-14 text-base font-semibold shadow-lg"
           >
             <Target className="w-5 h-5 mr-2" />
-            Set Goal
+            {t('dashboard.setGoal')}
           </Button>
           <Button 
             onClick={() => navigate('/bill')}
@@ -152,7 +154,7 @@ const Dashboard: React.FC = () => {
             className="border-green-600 text-green-600 hover:bg-green-50 rounded-2xl h-14 text-base font-semibold shadow-lg"
           >
             <CreditCard className="w-5 h-5 mr-2" />
-            View Bill
+            {t('dashboard.viewBill')}
           </Button>
         </div>
       </div>

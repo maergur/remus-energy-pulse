@@ -6,11 +6,13 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useEnergy } from '../contexts/EnergyContext';
 import Header from '../components/Header';
+import { useTranslation } from 'react-i18next';
 
 const UsageAnalytics: React.FC = () => {
   const navigate = useNavigate();
   const { energyData } = useEnergy();
   const [selectedPeriod, setSelectedPeriod] = useState<'daily' | 'weekly' | 'monthly'>('weekly');
+  const { t } = useTranslation();
 
   const weeklyData = [
     { period: 'Week 1', usage: 52.3, cost: 18.8 },
@@ -23,7 +25,7 @@ const UsageAnalytics: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white pb-20">
-      <Header title="Usage Analytics" subtitle="Track your energy patterns" />
+      <Header title={t('analytics.title')} subtitle={t('analytics.subtitle')} />
 
       <div className="p-4 space-y-6">
         {/* Efficiency Score Meter */}
@@ -31,8 +33,8 @@ const UsageAnalytics: React.FC = () => {
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="text-lg font-bold">Efficiency Score</h3>
-                <p className="text-purple-100 text-sm">Your energy optimization</p>
+                <h3 className="text-lg font-bold">{t('analytics.efficiencyScore')}</h3>
+                <p className="text-purple-100 text-sm">{t('analytics.yourOptimization')}</p>
               </div>
               <Award className="w-8 h-8 text-purple-200" />
             </div>
@@ -40,7 +42,7 @@ const UsageAnalytics: React.FC = () => {
             <div className="relative">
               <div className="w-full h-4 bg-purple-400 rounded-full overflow-hidden">
                 <div 
-                  className="h-full bg-white rounded-full transition-all duration-2000 ease-out"
+                  className="h-full bg.white rounded-full transition-all duration-2000 ease-out"
                   style={{ width: `${energyData.efficiencyScore}%` }}
                 ></div>
               </div>
@@ -64,7 +66,7 @@ const UsageAnalytics: React.FC = () => {
                   : 'text-gray-600 hover:text-gray-800'
               }`}
             >
-              {period.charAt(0).toUpperCase() + period.slice(1)}
+              {t(`analytics.period${period.charAt(0).toUpperCase() + period.slice(1)}` as any)}
             </button>
           ))}
         </div>
@@ -73,7 +75,7 @@ const UsageAnalytics: React.FC = () => {
         <Card className="bg-white shadow-lg rounded-3xl overflow-hidden">
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
-              <span>Energy Consumption</span>
+              <span>{t('analytics.energyConsumption')}</span>
               <TrendingUp className="w-5 h-5 text-green-600" />
             </CardTitle>
           </CardHeader>
@@ -110,22 +112,22 @@ const UsageAnalytics: React.FC = () => {
           <CardContent className="p-6">
             <h3 className="font-bold text-green-800 mb-3 flex items-center">
               <Calendar className="w-5 h-5 mr-2" />
-              Weekly Insights
+              {t('analytics.weeklyInsights')}
             </h3>
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-green-700">Best day</span>
+                <span className="text-green-700">{t('analytics.bestDay')}</span>
                 <span className="font-semibold text-green-800">Thursday (6.8 kWh)</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-green-700">Average daily usage</span>
+                <span className="text-green-700">{t('analytics.avgDaily')}</span>
                 <span className="font-semibold text-green-800">7.9 kWh</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-green-700">Trend</span>
+                <span className="text-green-700">{t('analytics.trend')}</span>
                 <span className="font-semibold text-green-800 flex items-center">
                   <TrendingUp className="w-4 h-4 mr-1" />
-                  Improving by 8%
+                  {t('analytics.improvingBy')}
                 </span>
               </div>
             </div>
