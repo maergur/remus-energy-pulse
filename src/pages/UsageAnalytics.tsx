@@ -12,7 +12,7 @@ const UsageAnalytics: React.FC = () => {
   const navigate = useNavigate();
   const { energyData } = useEnergy();
   const [selectedPeriod, setSelectedPeriod] = useState<'daily' | 'weekly' | 'monthly'>('weekly');
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const weeklyData = [
     { period: 'Week 1', usage: 52.3, cost: 18.8 },
@@ -22,6 +22,8 @@ const UsageAnalytics: React.FC = () => {
   ];
 
   const maxUsage = Math.max(...weeklyData.map(d => d.usage));
+  const efficiencyWidth = `${Math.max(2, Math.min(100, energyData.efficiencyScore))}%`;
+  const localeDayThu = i18n.language?.startsWith('tr') ? 'Perşembe' : 'Thursday';
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white pb-20">
@@ -40,10 +42,10 @@ const UsageAnalytics: React.FC = () => {
             </div>
             
             <div className="relative">
-              <div className="w-full h-4 bg-purple-400 rounded-full overflow-hidden">
+              <div className="w-full h-5 bg-white/25 rounded-full overflow-hidden ring-1 ring-white/30">
                 <div 
-                  className="h-full bg.white rounded-full transition-all duration-2000 ease-out"
-                  style={{ width: `${energyData.efficiencyScore}%` }}
+                  className="h-full bg-white/90 rounded-full transition-all duration-700 ease-out shadow-sm"
+                  style={{ width: efficiencyWidth }}
                 ></div>
               </div>
               <div className="text-right mt-2">
@@ -84,7 +86,7 @@ const UsageAnalytics: React.FC = () => {
               {weeklyData.map((item, index) => (
                 <div key={item.period} className="flex items-center space-x-4">
                   <div className="w-16 text-sm font-medium text-gray-600">
-                    {item.period}
+                    {t('analytics.weekLabel', { num: index + 1 })}
                   </div>
                   <div className="flex-1">
                     <div className="flex justify-between items-center mb-1">
@@ -93,10 +95,10 @@ const UsageAnalytics: React.FC = () => {
                     </div>
                     <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
                       <div 
-                        className="h-full bg-gradient-to-r from-purple-500 to-purple-400 rounded-full transition-all duration-1000 ease-out"
+                        className="h-full bg-gradient-to-r from-purple-500 to-purple-400 rounded-full transition-all duration-700 ease-out"
                         style={{ 
-                          width: `${(item.usage / maxUsage) * 100}%`,
-                          animationDelay: `${index * 200}ms`
+                          width: `${Math.min(100, Math.max(6, (item.usage / maxUsage) * 100))}%`,
+                          animationDelay: `${index * 120}ms`
                         }}
                       ></div>
                     </div>
@@ -117,11 +119,11 @@ const UsageAnalytics: React.FC = () => {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-green-700">{t('analytics.bestDay')}</span>
-                <span className="font-semibold text-green-800">Thursday (6.8 kWh)</span>
+                <span className="font-semibold text-green-800">{t('analytics.bestDayValue', { day: localeDayThu, value: 6.8 })}</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-green-700">{t('analytics.avgDaily')}</span>
-                <span className="font-semibold text-green-800">7.9 kWh</span>
+                <span className="font-semibold text-green-800">{t('analytics.avgDailyValue', { value: 7.9 })}</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-green-700">{t('analytics.trend')}</span>

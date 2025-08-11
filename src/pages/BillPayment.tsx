@@ -13,20 +13,33 @@ const BillPayment: React.FC = () => {
   const navigate = useNavigate();
   const { energyData } = useEnergy();
   const [paymentSuccess, setPaymentSuccess] = useState(false);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  const locale = i18n.language?.startsWith('tr') ? 'tr-TR' : 'en-US';
+  const formatMonthYear = (date: Date | string) => new Intl.DateTimeFormat(locale, { year: 'numeric', month: 'long' }).format(typeof date === 'string' ? new Date(date) : date);
+  const formatDate = (date: Date | string) => new Intl.DateTimeFormat(locale, { year: 'numeric', month: 'long', day: 'numeric' }).format(typeof date === 'string' ? new Date(date) : date);
+  const getPreviousMonth = (date: Date | string) => {
+    const d = typeof date === 'string' ? new Date(date) : new Date(date.getTime());
+    d.setMonth(d.getMonth() - 1);
+    return d;
+  };
 
   const currentBill = {
     amount: 156.75,
     dueDate: '2024-01-15',
     usage: 65.3,
-    period: 'December 2023',
+    period: '2023-12-01',
     status: 'unpaid'
-  };
+  } as const;
+
+  const prev1 = getPreviousMonth(currentBill.period);
+  const prev2 = getPreviousMonth(prev1);
+  const prev3 = getPreviousMonth(prev2);
 
   const previousBills = [
-    { month: 'November 2023', amount: 142.30, usage: 58.7, status: 'paid' },
-    { month: 'October 2023', amount: 165.80, usage: 71.2, status: 'paid' },
-    { month: 'September 2023', amount: 138.45, usage: 56.8, status: 'paid' },
+    { month: formatMonthYear(prev1), amount: 142.30, usage: 58.7, status: 'paid' },
+    { month: formatMonthYear(prev2), amount: 165.80, usage: 71.2, status: 'paid' },
+    { month: formatMonthYear(prev3), amount: 138.45, usage: 56.8, status: 'paid' },
   ];
 
   const handlePayBill = () => {
@@ -51,7 +64,7 @@ const BillPayment: React.FC = () => {
               <span>{t('bill.currentBill')}</span>
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                <span className="text-sm font.medium text-red-600">{t('bill.unpaid')}</span>
+                <span className="text-sm font-medium text-red-600">{t('bill.unpaid')}</span>
               </div>
             </CardTitle>
           </CardHeader>
@@ -61,9 +74,9 @@ const BillPayment: React.FC = () => {
                 <div className="text-4xl font-bold text-gray-900 mb-2">
                   {currentBill.amount} TL
                 </div>
-                <div className="text-gray-600">{currentBill.period}</div>
+                <div className="text-gray-600">{formatMonthYear(currentBill.period)}</div>
                 <div className="text-sm text-gray-500 mt-1">
-                  {currentBill.usage} kWh consumed
+                  {t('bill.kwhConsumed', { value: currentBill.usage })}
                 </div>
               </div>
 
@@ -72,12 +85,12 @@ const BillPayment: React.FC = () => {
                   <span className="text-gray-600">{t('bill.dueDate')}</span>
                   <span className="font-semibold text-gray-900 flex items-center">
                     <Calendar className="w-4 h-4 mr-1" />
-                    {currentBill.dueDate}
+                    {formatDate(currentBill.dueDate)}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-gray-600">{t('bill.usagePeriod')}</span>
-                  <span className="font-semibold text-gray-900">{currentBill.period}</span>
+                  <span className="font-semibold text-gray-900">{formatMonthYear(currentBill.period)}</span>
                 </div>
               </div>
 
@@ -119,7 +132,7 @@ const BillPayment: React.FC = () => {
                 <span className="text-gray-600">{t('bill.offPeak')}</span>
                 <span className="font-semibold">18.00 TL</span>
               </div>
-              <div className="flex items-center justify_between">
+              <div className="flex items-center justify-between">
                 <span className="text-gray-600">{t('bill.taxesFees')}</span>
                 <span className="font-semibold">4.00 TL</span>
               </div>

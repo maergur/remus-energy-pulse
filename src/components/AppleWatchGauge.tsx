@@ -131,7 +131,7 @@ const AppleWatchGauge: React.FC = () => {
       </svg>
 
       {/* Enhanced center content with better typography */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center z-20">
+      <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
         <div className="text-3xl font-bold text-foreground leading-none mb-1 tracking-tight">
           {energyData.currentUsage}
         </div>
@@ -142,7 +142,7 @@ const AppleWatchGauge: React.FC = () => {
       </div>
 
       {/* Enhanced ring labels with better positioning and colors */}
-      <div className="absolute inset-0 pointer-events-none z-30">
+      <div className="absolute inset-0 pointer-events-none z-10">
         <div className="absolute top-3 left-1/2 transform -translate-x-1/2 text-xs font-semibold text-foreground/80 bg-background/80 backdrop-blur-sm px-2 py-1 rounded-full border border-border/20">
           {t('dashboard.usage')}
         </div>

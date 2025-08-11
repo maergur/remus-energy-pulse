@@ -23,7 +23,7 @@ const GoalsChallenges: React.FC = () => {
       title: t('goals.challenge1Title'),
       description: t('goals.challenge1Desc'),
       progress: 60,
-      reward: 'Eco Warrior Badge',
+      reward: t('goals.rewardEcoWarrior'),
       daysLeft: 2,
       icon: Zap,
       color: 'from-blue-500 to-blue-600'
@@ -33,7 +33,7 @@ const GoalsChallenges: React.FC = () => {
       title: t('goals.challenge2Title'),
       description: t('goals.challenge2Desc'),
       progress: 80,
-      reward: 'Weekend Hero Badge',
+      reward: t('goals.rewardWeekendHero'),
       daysLeft: 1,
       icon: Leaf,
       color: 'from-green-500 to-green-600'
@@ -43,7 +43,7 @@ const GoalsChallenges: React.FC = () => {
       title: t('goals.challenge3Title'),
       description: t('goals.challenge3Desc'),
       progress: 45,
-      reward: 'Efficiency Master Badge',
+      reward: t('goals.rewardEfficiencyMaster'),
       daysLeft: 16,
       icon: Trophy,
       color: 'from-purple-500 to-purple-600'
@@ -197,11 +197,18 @@ const GoalsChallenges: React.FC = () => {
               {t('goals.yourBadges')}
             </h3>
             <div className="flex flex-wrap gap-3">
-              {energyData.badges.map((badge, index) => (
-                <div key={index} className="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2">
-                  <span className="text-sm font-semibold">{badge}</span>
-                </div>
-              ))}
+              {energyData.badges.map((badge, index) => {
+                const localized = (
+                  badge === 'Eco Star' ? t('goals.yourBadges') && 'Eko Yıldız' :
+                  badge === 'Energy Saver' ? 'Enerji Dostu' :
+                  badge
+                );
+                return (
+                  <div key={index} className="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2">
+                    <span className="text-sm font-semibold">{localized}</span>
+                  </div>
+                );
+              })}
             </div>
           </CardContent>
         </Card>

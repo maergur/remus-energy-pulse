@@ -28,6 +28,25 @@ const Dashboard: React.FC = () => {
 
   const maxUsage = Math.max(...dailyUsageData.map(d => d.usage));
 
+  const translateDay = (abbr: string) => {
+    const key = abbr.toLowerCase();
+    const map: Record<string, string> = {
+      mon: t('days.mon'),
+      tue: t('days.tue'),
+      wed: t('days.wed'),
+      thu: t('days.thu'),
+      fri: t('days.fri'),
+      sat: t('days.sat'),
+      sun: t('days.sun'),
+    };
+    // support both "Mon" and full forms
+    if (map[key]) return map[key];
+    const first3 = key.slice(0,3);
+    return map[first3] || abbr;
+  };
+
+  const localizedDailyUsageData = dailyUsageData.map(d => ({ ...d, day: translateDay(d.day) }));
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-white pb-16">
       <Header title={t('dashboard.title')} subtitle={t('dashboard.subtitle')} />
@@ -85,7 +104,7 @@ const Dashboard: React.FC = () => {
               className="h-40 w-full"
             >
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={dailyUsageData} margin={{ left: -8, right: -8, top: 0, bottom: 36 }}>
+                <LineChart data={localizedDailyUsageData} margin={{ left: -8, right: -8, top: 0, bottom: 36 }}>
                   <Line 
                     type="monotone" 
                     dataKey="usage" 
@@ -110,14 +129,12 @@ const Dashboard: React.FC = () => {
                         fill="#6B7280"
                         transform={`rotate(-30,${props.x},${props.y + 24})`}
                       >
-                        {props.payload.value}
+                        {String(props.payload.value)}
                       </text>
                     )}
                   />
                   <YAxis hide />
-                  <ChartTooltip 
-                    content={<ChartTooltipContent />}
-                  />
+                  <ChartTooltip content={<ChartTooltipContent />} />
                 </LineChart>
               </ResponsiveContainer>
             </ChartContainer>
