@@ -198,11 +198,8 @@ const GoalsChallenges: React.FC = () => {
             </h3>
             <div className="flex flex-wrap gap-3">
               {energyData.badges.map((badge, index) => {
-                const localized = (
-                  badge === 'Eco Star' ? t('goals.yourBadges') && 'Eko Yıldız' :
-                  badge === 'Energy Saver' ? 'Enerji Dostu' :
-                  badge
-                );
+                const key = badge === 'Eco Star' ? 'goals.badges.ecoStar' : badge === 'Energy Saver' ? 'goals.badges.energySaver' : undefined;
+                const localized = key ? t(key as any) : badge;
                 return (
                   <div key={index} className="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2">
                     <span className="text-sm font-semibold">{localized}</span>
